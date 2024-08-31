@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 작성</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*두꺼운 폰트*/
+        @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
+
+        /*헤더*/
+        header{
+            box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+
+        }
+        .navigation-bar ul{
+            display: flex;
+            list-style: none;
+            margin-right: 80px;
+            gap: 40px;
+            padding: 0;
+        }
+        .navigation-bar li{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 20px;
+            display: inline;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .logo{
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-title{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            margin: 0;
+            font-size: 35px;
+            color: #00A3FF;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .logo-img{
+            position: absolute;
+            top: 8px;
+            left: 253px;
+        }
+
+        /*글 쓰기*/
+        .write-container{
+            margin: 80px auto 0;
+            width: 65%;
+        }
+        .write-titleAndWriter{
+            width: 90%;
+            margin: 20px auto 0 ;
+            align-items: center;
+
+        }
+        label{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 22px;
+            margin: 0;
+            width: 100px;
+
+        }
+        .write-title{
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .write-title input{
+            width:100%;
+            height: 38px;
+            border:none;
+            box-shadow: -2px 4px 4px -2px rgb(182, 182, 182);
+        }
+        input:focus{
+            outline: none;
+        }
+
+
+
+        /*본문*/
+        .write-main{
+            display: flex;
+            margin: 15px auto 0 ;
+            width: 90%;
+            gap: 12px;
+
+        }
+        #main-text{
+            width: 90%;
+            height: 220px;
+            box-shadow: -2px 4px 4px -2px rgb(182, 182, 182);
+            border: none;
+        }
+        #main-text:focus{
+            outline: none;
+        }
+
+        /*사진 첨부*/
+        .write-image{
+            width: 90%;
+            margin: 15px auto 0 ;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input::file-selector-button{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
+            border: none;
+            width: 110px;
+            height: 36px;
+            margin-right: 13px;
+            background-color: white;
+        }
+        .img-inform h6{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            padding: 0;
+            margin:0;
+            text-align: center;
+            color: #00A3FF;
+        }
+
+
+        /*버튼 클릭*/
+        .click-btn{
+            width: 70%;
+            margin: 50px auto 0 ;
+            text-align: right;
+        }
+
+        .click-btn button{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            width: 100px;
+            height: 35px;
+            margin-left: 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #go-write{
+            background-color: #00A3FF;
+            color: white;
+            border: none;
+        }
+
+        #view-list{
+            background-color: white;
+            border: 1px solid #B0B0B0;
+            color: black;
+        }
+
+
+
+
+
+
+    </style>
+
+</head>
+
+<header>
+    <div class="logo">
+        <a href="./main-notice.html">
+            <h3 class="logo-title">SHARE BOARD</h3>
+            <img src="../img/logo.png" width="45" height="25" class="logo-img">
+        </a>
+    </div>
+    <div class="navigation-bar">
+        <ul class="navigation">
+            <li id="notice" class="navigations"><a href="../beforeLogin/main-notice.html">공지사항</a> </li>
+            <li id="list" class="navigations"><a href="../afterLogin/afterLogin_list.html"> 글 목록</a></li>
+            <li id="writing" class="navigations">글 작성</li>
+            <li id="userGreeting"> <a href="../createUser/login.html">님</a></li>
+        </ul>
+    </div>
+</header>
+<body>
+<div class="write-container">
+
+
+    <div class="write-box">
+        <div class="write-titleAndWriter">
+            <div class="write-title">
+                <label for="title">글 제목</label>
+                <input type="text" id="title"  style="font-size: 18px;">
+            </div>
+
+        </div>
+        <div class="write-main">
+           <label for="main-text">본문</label>
+            <textarea style="resize: none; font-size: 18px" id="main-text" ></textarea>
+
+        </div>
+        <div class="write-image">
+            <div class="img-inform">
+               <label for="image-upload">사진 첨부</label>
+                <h6>수정 불가</h6>
+            </div>
+            <input type="file" id="image-upload" >
+        </div>
+
+    </div>
+
+</div>
+<div class="click-btn">
+    <button id="write" type="button" >작성하기</button>
+    <button id="view-list" type="submit" ><a href="../afterLogin/afterLogin_list.html">목록보기</a> </button>
+</div>
+
+
+
+
+<SCRIPT>
+    /*헤더*/
+    window.onload = function (){ /*디폴트값*/
+        const writing = document.getElementById('writing');
+        writing.style.color='#00A3FF';
+    }
+
+    /* 사용자 이름 */
+    const userName = sessionStorage.getItem('userName');
+
+    if (userName) {
+        const userGreetingElement = document.getElementById('userGreeting');
+        userGreetingElement.textContent = `${userName}님`;
+    } else {
+        console.log('sessionStorage에 사용자 이름이 없습니다.');
+    }
+
+    /* 이미지 업로드 */
+    document.getElementById('write').addEventListener('click', async (event) => {
+        event.preventDefault();
+        const imageUrl = await fileUpload();
+        if (imageUrl !== null) {
+            await sendData(imageUrl);
+        }
+    });
+
+    const fileUpload = async () => {
+        let email = "such1123@naver.com";
+
+        try {
+            let fileInput = document.getElementById("image-upload");
+            let file = fileInput.files[0];
+
+            // 파일 선택 여부 체크
+            if (file) {
+                const allowedExtensions = [".jpg", ".jpeg", ".png", ".mp4"];
+                const fileExtension = file.name.slice(file.name.lastIndexOf(".")); // 파일의 확장자 추출
+
+                // 확장자 검사
+                if (!allowedExtensions.includes(fileExtension.toLowerCase())) {
+                    alert("지원되지 않는 파일 형식입니다. .jpg, .jpeg, .png, .mp4 파일만 업로드 가능합니다.");
+                    return null;  // 문제 발생시 null 반환
+                }
+            }
+
+            const formData = new FormData();
+
+            // 선택된 파일을 FormData에 추가
+            if (file) {
+                formData.append("file", file); // "file"은 서버에서 파일을 처리하는 데 사용될 키 이름
+            } else {
+                formData.append("file", null); // 파일이 없을 경우 null 추가
+            }
+            formData.append("email", `${email}`);  // id는 이미 상단에서 선언된 변수 사용
+
+            // 서버로 FormData 전송
+            const response = await fetch(`http://localhost:8080/api/blob/upload/email`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.message || "파일 업로드에 실패하였습니다.");
+                console.log('전송');
+            }
+
+            const data = await response.json();
+            return file ? data.message : "NULL";
+        } catch (error) {
+            console.error('Error:', error);
+            alert("파일 업로드 실패: " + error.message);
+            return null;
+        }
+    };
+
+    /* 글 작성하기 */
+    const sendData = async (imageUrl) => {
+        let currentPostId = sessionStorage.getItem('post_id');
+        if (currentPostId === null) {
+            currentPostId = "1";
+            sessionStorage.setItem('post_id', currentPostId);
+        } else {
+            currentPostId = parseInt(currentPostId, 10) + 1;
+            sessionStorage.setItem('post_id', currentPostId.toString());
+        }
+
+        const post_id = parseInt(sessionStorage.getItem("post_id"))+1;
+        const id = sessionStorage.getItem('id');
+        const title = document.getElementById('title').value;
+        const writer = userName;
+        const date = new Date().toISOString(); // 현재 날짜를 ISO 포맷으로
+        const mainText = document.getElementById('main-text').value;
+
+        const obj = {
+            post_id:post_id,
+            id: id,
+            title: title,
+            writer: writer,
+            date: date,
+            img: imageUrl,
+            mainText: mainText
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj)
+            });
+
+            const result = await response.json();
+            console.log(result);
+            if (response.ok) {
+                if (confirm("글 작성 성공")) {
+                    location.href = "../beforeLogin/main-notice.html";
+                } else {
+                    console.log("User chose to stay on the page.");
+                }
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error sending data:', error);
+        }
+    };
+
+
+
+</SCRIPT>
+
+
+</body>
+</html>

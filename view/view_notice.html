@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 상세보기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Black+Han+Sans&family=Do+Hyeon&family=Gasoek+One&family=Nanum+Gothic:wght@400;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*두꺼운 폰트*/
+        @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
+
+
+        body{
+        }
+
+        /*헤더*/
+        header{
+            box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+
+        }
+        .navigation-bar ul{
+            display: flex;
+            list-style: none;
+            margin-right: 80px;
+            gap: 40px;
+            padding: 0;
+        }
+        .navigation-bar li{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 20px;
+            display: inline;
+        }
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+        .logo{
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-title{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            margin: 0;
+            font-size: 35px;
+            color: #00A3FF;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .logo-img{
+            position: absolute;
+            top: 8px;
+            left: 253px;
+        }
+
+        /*공지사항 및 서치박스*/
+        .main-top{
+            width: 70%;
+            margin: 55px auto 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .main-title{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 35px;
+            margin: 0;
+            color: #333d48;
+        }
+
+
+        /*리스트 글 테이블*/
+        #list-container{
+            margin: 0 auto;
+            width: 70%;
+        }
+
+        .list-table{
+            border-bottom:1px solid #8D8D8D;
+            width: 100%;
+        }
+
+        .list-title{
+            margin: 0;
+            padding:10px 0 10px 0;
+            color: #4e5968;
+            font-size: 25px;
+
+        }
+        .list-date{
+            margin: 0;
+            padding-bottom: 20px;
+            color: #8b95a1;
+            font-size: 16px;
+        }
+
+        p{
+            font-size: 18px;
+            padding-bottom: 5px;
+        }
+        .main-text{
+            margin-top: 30px;
+            color: #4e5968;
+        }
+        strong{
+            font-size: 19px;
+        }
+        .a{
+            color: #00A3FF;
+        }
+
+
+
+
+
+    </style>
+
+</head>
+
+<header>
+    <div class="logo">
+        <a href="./main-notice.html">
+            <h3 class="logo-title">SHARE BOARD</h3>
+            <img src="../img/logo.png" width="45" height="25" class="logo-img">
+        </a>
+    </div>
+    <div class="navigation-bar">
+        <ul class="navigation">
+            <li id="notice" class="navigations">공지사항</li>
+            <li id="list" class="navigations"><a href="./main-list.html"> 글 목록</a></li>
+            <li id="login"> <a href="../createUser/login.html">로그인</a></li>
+        </ul>
+    </div>
+</header>
+<body>
+<div class="main-top">
+    <h4 class="main-title">공지사항</h4>
+</div>
+
+<div id="list-container">
+    <div class="list-table">
+        <h2 class="list-title">자바스크립트에 대하여</h2>
+        <h4 class="list-date">2024.07.16</h4>
+
+    </div>
+    <div class="main-text">
+
+        <p>안녕하세요. 쉐어보드팀입니다.<br></p>
+
+        <p>2024년 8월 19일부로 가족 보안 알리미 서비스가 가족 보안 지킴이 서비스로 변경됨을 공지드립니다.<br></p>
+
+        <p>주요 변경사항은 서비스명의 변경이며, 변경약관의 전문은 아래의 링크에서 확인할 수 있습니다.</p>
+       <strong> 1.주요 변경사항 및 개정사유<br> </strong>
+
+        <p>서비스명 변경<br></p>
+
+        <p>"가족 보안 알리미 서비스" 가 "가족 보안 지킴이 서비스"로 변경됩니다.<br></p>
+
+            <strong> 2. 변경 전, 후 약관 전문?<br></strong>
+
+       <p><a href="" class="a">[변경 전 약관 보러가기]</a></p>
+
+        <p><a href="" class="a">[변경 후 약관 보러가기]</a> </p>
+
+        <strong>3. 개정일자<br></strong>
+        <p>약관 시행일 : 2024년 8월 19일</p>
+
+        <strong>4. 이의제기 관련 사항<br></strong>
+        <p>개정 약관에 동의하지 않으시는 경우에는 서비스 해지를 요청하실 수 있으며, 개정 약관 시행일 전까지 별도의 이의를 제기하지 않으실 경우 본 개정 약관에 동의하시는 것으로 간주됨을 알려드립니다.</p>
+
+        <p>금번 약관 개정과 관련하여 궁금하신 사항은 고객센터(1599-4905, 카카오톡 아이디: @ shareBoard)로 문의하여 주시기 바랍니다.</p>
+
+        <p>감사합니다.</p>
+
+        <p>쉐어보드팀 올림</p>
+
+    </div>
+</div>
+
+
+<SCRIPT>
+    /*헤더*/
+    window.onload = function (){ /*디폴트값*/
+        const notice = document.getElementById('notice');
+        notice.style.color='#00A3FF';
+    }
+
+    /*게시글 내용*/
+
+
+
+
+</SCRIPT>
+
+
+</body>
+</html>

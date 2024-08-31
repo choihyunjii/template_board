@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 화면</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*전체 폰트*/
+
+        body{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            width: 70%;
+            margin: 40px auto;
+        }
+
+        .title{
+            font-size: 50px;
+            text-align: center;
+            margin: 0;
+        }
+
+        /*토글 버튼*/
+        .button-box{
+            width: 260px;
+            height: 42px;
+            margin: 5px auto;
+            position: relative;
+            border-radius: 5px;
+            background-color: #F0F0F0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .toggle-btn{
+            border: none;
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 19px;
+            cursor: pointer;
+            background-color: transparent;
+            position: relative;
+
+        }
+
+        #btn{
+            left: 0;
+            top:0;
+            position:absolute;
+            width: 135px;
+            height: 100%;
+            background-color: #00A3FF;
+            border-radius: 5px;
+            transition: .5s;
+        }
+
+        /*회원가입 창*/
+        .input-container{
+            padding-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h4{
+            margin: 3px;
+            font-size: 18px;
+        }
+        input{
+            flex: 1;
+            width: 360px;
+            height: 45px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+        }
+
+        input:focus{
+            outline: none;
+        }
+        .signUP-btn button{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            width: 380px;
+            height: 55px;
+            background-color: #00A3FF;
+            border: none;
+            border-radius: 5px;
+            font-size: 25px;
+            color: white;
+            cursor: pointer;
+
+        }
+        .signUP-btn{
+            margin-top: 20px;
+        }
+        #admin-btn{
+            left: 38px;
+
+        }
+        #member-btn{
+            right: 32px;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<h1 class="title">
+    회원가입
+</h1>
+<div class="form-box">
+    <div class="button-box">
+        <div id="btn"></div>
+        <button type="button" class="toggle-btn" onclick="leftClick()" id="member-btn">
+            <input type="hidden" class="role" value="회원"> 회원</button>
+        <button type="button" class="toggle-btn" onclick="rightClick()" id="admin-btn">
+            <input type="hidden" class="role" value="회원">관리자</button>
+    </div>
+</div>
+<div class="input-container">
+    <div class="input-box">
+        <h4>아이디</h4>
+        <input type="text" id="id" required>
+    </div>
+    <div class="input-box">
+        <h4>이름</h4>
+        <input type="text" id="name" required>
+    </div>
+    <div class="input-box">
+        <h4>비밀번호</h4>
+        <input type="password" id="pass-word" required>
+    </div>
+    <div class="input-box">
+        <h4>비밀번호 확인</h4>
+        <input type="password" id="confirm-pw" required>
+    </div>
+    <div class="signUP-btn">
+        <button type="button" id="signUP-btn" onclick="sendData()">회원가입</button>
+    </div>
+
+</div>
+<script>
+
+
+
+
+
+    /*토글*/
+    var btn = document.getElementById('btn');
+    var memberBtn = document.getElementById('member-btn');
+    var adminBtn = document.getElementById('admin-btn');
+
+    window.onload = function() {
+        memberBtn.style.color = 'white';
+        adminBtn.style.color = 'black';
+    };
+    function leftClick(){
+        btn.style.left='0';
+        memberBtn.style.color = 'white';
+        adminBtn.style.color = 'black';
+        document.querySelector('.role').value = '회원';
+    }
+    function rightClick(){
+        btn.style.left='125px';
+        memberBtn.style.color = 'black';
+        adminBtn.style.color = 'white';
+        document.querySelector('.role').value = '관리자';
+    }
+
+
+    /*회원가입 정보 보내기*/
+    const sendData = async () => {
+        const id= document.getElementById('id').value;
+        const name = document.getElementById('name').value;
+        const password = document.getElementById('pass-word').value;
+        const pwConfirm = document.getElementById('confirm-pw').value;
+        const role = document.querySelector('.role').value;
+
+        if (!id || !name || !password || !pwConfirm) {
+            alert('모든 필드를 입력해 주세요.');
+            return;
+        }
+
+        if (password !== pwConfirm) {
+            alert('비밀번호가 일치하지 않습니다.');
+            return;
+        }
+
+        const obj = {
+            id: id,
+            name:name,
+            password:password,
+            role:role
+        };
+
+        try {
+
+            const response = await fetch(`http://localhost:8080/api/builder/metadata/aa3f834ec3f2b980a97f8a60eac696fc05f2c5e52cf731e802deba958f690a4c`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(obj) // 위에서 정한 객체를 json으로 바꿔줌
+            });
+
+            const result = await response.json();
+            console.log(result);
+            if (response.ok) {
+                if (confirm("회원가입 성공")){
+                    location.href = "./login.html";
+                } else {
+                    console.log("User chose to stay on the page.");
+                }
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error sending data:', error);
+        }
+    };
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

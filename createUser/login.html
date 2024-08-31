@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 화면</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*전체 폰트*/
+
+            body{
+                font-family: "IBM Plex Sans KR", sans-serif;
+                width: 70%;
+                margin: 80px auto;
+            }
+
+            .title{
+                font-size: 50px;
+                text-align: center;
+                margin: 0;
+            }
+
+            /*토글 버튼*/
+            .button-box{
+                width: 260px;
+                height: 42px;
+                margin: 15px auto;
+                position: relative;
+                border-radius: 5px;
+                background-color: #F0F0F0;
+                display: flex;
+                justify-content: center;
+            }
+
+            .toggle-btn{
+                border: none;
+                font-family: "IBM Plex Sans KR", sans-serif;
+                font-size: 19px;
+                cursor: pointer;
+                background-color: transparent;
+                position: relative;
+
+            }
+
+            #btn{
+                left: 0;
+                top:0;
+                position:absolute;
+                width: 135px;
+                height: 100%;
+                background-color: #00A3FF;
+                border-radius: 5px;
+                transition: .5s;
+            }
+            .input-container{
+               padding-top: 15px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .input-box{
+
+            }
+            h4{
+                margin: 2px;
+                font-size: 18px;
+            }
+            input{
+                flex: 1;
+                width: 360px;
+                height: 50px;
+                border: none;
+                border-bottom: 1px solid #ccc;
+            }
+            input:focus{
+                outline: none;
+            }
+            .login-btn button{
+                font-family: "IBM Plex Sans KR", sans-serif;
+                width: 380px;
+                height: 55px;
+                background-color: #00A3FF;
+                border: none;
+                border-radius: 5px;
+                font-size: 25px;
+                color: white;
+                cursor: pointer;
+            }
+
+            .login-btn{
+                margin-top: 20px;
+            }
+            #admin-btn{
+                left: 38px;
+
+            }
+            #member-btn{
+                right: 32px;
+            }
+            #goSignup{
+                border:none;
+                background-color: transparent;
+                font-size: 17px;
+            }
+            a{
+                text-decoration: none;
+                color: black;
+            }
+
+
+
+        </style>
+    </head>
+    <body>
+    <h1 class="title">
+        로그인
+    </h1>
+<div class="form-box">
+    <div class="button-box">
+        <div id="btn"></div>
+        <button type="button" class="toggle-btn" onclick="leftClick()" id="member-btn">
+            <input type="hidden" class="role" value="회원"> 회원</button>
+        <button type="button" class="toggle-btn" onclick="rightClick()" id="admin-btn">
+            <input type="hidden" class="role" value="회원">관리자</button>
+    </div>
+</div>
+    <div class="input-container">
+        <div class="input-box">
+            <h4>아이디</h4>
+            <input type="text" id="id" required>
+        </div>
+        <div class="input-box">
+            <h4>비밀번호</h4>
+            <input type="password" id="password" required>
+        </div>
+        <div class="login-btn">
+            <button type="button" id="login-btn" onclick="fetchData()">로그인</button>
+
+        </div>
+        <button type="button" id="goSignup"><a href="./sign-up.html">회원가입</a></button>
+    </div>
+<script>
+
+    /*토글*/
+    var btn = document.getElementById('btn');
+    var memberBtn = document.getElementById('member-btn');
+    var adminBtn = document.getElementById('admin-btn');
+
+    window.onload = function() {
+        memberBtn.style.color = 'white';
+        adminBtn.style.color = 'black';
+    };
+    function leftClick(){
+        btn.style.left='0';
+        memberBtn.style.color = 'white';
+        adminBtn.style.color = 'black';
+        document.querySelector('.role').value = '회원';
+    }
+    function rightClick(){
+        btn.style.left='125px';
+        memberBtn.style.color = 'black';
+        adminBtn.style.color = 'white';
+        document.querySelector('.role').value = '관리자';
+    }
+
+    /*로그인 버튼 클릭시*/
+    const fetchData = async () => {
+        const id = document.getElementById('id').value;
+        const password = document.getElementById('password').value;
+        const role = document.querySelector('.role').value;
+
+        // 입력 값 유효성 검사
+        if (!id || !password) {
+            alert('아이디와 비밀번호를 입력해 주세요.');
+            return;
+        }
+
+        // 서버로 GET 요청 보내기
+        try {
+            const response = await fetch(`http://localhost:8080/api/builder/metadata/aa3f834ec3f2b980a97f8a60eac696fc05f2c5e52cf731e802deba958f690a4c`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const responseData = await response.json();
+            console.log(responseData);
+
+            const data = responseData.find(item => item.id === id );
+            if (data) {
+                if (data.password !== password) {
+                    alert('비밀번호가 올바르지 않습니다.');
+                    return;
+                }
+
+                if (data.role === role) {
+                    // 세션 스토리지에 사용자 이름 저장
+                    sessionStorage.setItem('userName', data.name);
+                    sessionStorage.setItem('id', data.id);
+
+
+                    // 사용자 역할에 따라 페이지 이동
+                    if (data.role === '회원') {
+                        console.log('회원');
+                        alert('로그인 성공!');
+                        window.location.href = '../afterLogin/afterLogin_list.html';
+                    } else if (data.role === '관리자') {
+                        console.log('관리자');
+                        alert('로그인 성공!');
+                        window.location.href = '../afterLogin/afterLogin_notice.html';
+                    } else {
+                        console.error('알 수 없는 역할:', data.role);
+                        alert('알 수 없는 역할입니다.');
+                    }
+                } else {
+                    console.error('역할이 일치하지 않습니다:', data.role);
+                    alert('로그인 실패: 역할이 일치하지 않습니다.');
+                }
+            } else {
+                console.error('제공된 ID에 대한 데이터가 없습니다.');
+                alert('로그인 실패: 아이디가 존재하지 않습니다.');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    // "회원" 역할에 맞는 뷰 생성
+    /*function createMemberView(title, writer, mainText, img) {
+        // 예시: "회원" 뷰 생성
+        document.body.innerHTML = `
+        <h1>회원 뷰</h1>
+        <h2>${title}</h2>
+        <p>${mainText}</p>
+        <p>작성자: ${writer}</p>
+        <img src="${img}" alt="이미지">
+    `;
+    }*/
+
+    // "관리자" 역할에 맞는 뷰 생성
+    /*function createAdminView(title, writer, mainText, img) {
+        // 예시: "관리자" 뷰 생성
+        document.body.innerHTML = `
+        <h1>관리자 뷰</h1>
+        <h2>${title}</h2>
+        <p>${mainText}</p>
+        <p>작성자: ${writer}</p>
+        <img src="${img}" alt="이미지">
+        <button onclick="adminFunction()">관리자 기능 실행</button>
+    `;
+    }*/
+
+
+
+</script>
+
+</body>
+</html>

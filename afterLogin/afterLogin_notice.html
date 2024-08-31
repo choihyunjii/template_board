@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 공지사항</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*두꺼운 폰트*/
+        @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
+
+
+
+        body{
+        }
+
+        /*헤더*/
+        header{
+            box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+
+        }
+        .navigation-bar ul{
+            display: flex;
+            list-style: none;
+            margin-right: 80px;
+            gap: 40px;
+            padding: 0;
+        }
+        .navigation-bar li{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 20px;
+            display: inline;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .logo{
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-title{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            margin: 0;
+            font-size: 35px;
+            color: #00A3FF;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .logo-img{
+            position: absolute;
+            top: 8px;
+            left: 253px;
+        }
+
+        /*공지사항 및 서치박스*/
+        .main-top{
+            width: 70%;
+            margin: 55px auto 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .main-title{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 35px;
+            margin: 0;
+        }
+        .search-container{
+            display: flex;
+            align-items: center;
+        }
+        .search-button{
+            position: relative;
+            width: 35px;
+            height: 35px;
+            background-color: #00A3FF;
+            border-radius: 50%;
+            margin-left: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-img{
+            position: absolute;
+            top: 6px;
+            left: 6px;
+        }
+        .search:hover,
+        .search:focus {
+            outline: none;
+        }
+
+        .search{
+            border-radius: 5px;
+            border:1px solid #979797;
+        }
+
+        /*리스트 글 테이블*/
+        #list-container{
+            margin: 0 auto;
+            width: 70%;
+        }
+        .list-table{
+            border-bottom:1px solid #8D8D8D;
+            width: 100%;
+        }
+        .list-title{
+            margin: 0;
+            padding:10px 0 10px 0;
+        }
+        .list-date{
+            margin: 0;
+            padding-bottom: 12px;
+        }
+        /*페이지 네이션*/
+        /*  #page-nation{
+              border:1px solid black;
+              width: 40%;
+              margin: 40px auto 0;
+          }
+  */
+        #page-nation {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        #page-nation button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border:none;
+            background-color: transparent;
+            font-size: 15px;
+            font-family: "IBM Plex Sans KR", sans-serif;
+        }
+
+        #page-nation button.active {
+            font-weight: bold;
+            color: #00A3FF;
+        }
+
+
+
+    </style>
+
+</head>
+
+<header>
+    <div class="logo">
+        <a href="">
+            <h3 class="logo-title">SHARE BOARD</h3>
+            <img src="../img/logo.png" width="45" height="25" class="logo-img">
+        </a>
+    </div>
+    <div class="navigation-bar">
+        <ul class="navigation">
+            <li id="notice" class="navigations">공지사항</li>
+            <li id="list" class="navigations"><a href="./afterLogin_list.html"> 글 목록</a></li>
+            <li id="writing" class="navigations"><a href="../write/write.html">글 작성</a></li>
+            <li id="login"> <a href="../createUser/login.html">OOO님</a></li>
+        </ul>
+    </div>
+</header>
+<body>
+<div class="main-top">
+    <h4 class="main-title">공지사항</h4>
+    <div class="search-container">
+        <input type="text" class="search" style="width: 210px; height: 30px;" placeholder="검색어를 입력하세요.">
+        <button class="search-button" type="button">
+            <img src="../img/whiteGlass.png" width="22" height="22" class="search-img">
+        </button>
+    </div>
+</div>
+
+<div id="list-container">
+    <!--<div class="list-table">
+        <h2 class="list-title">자바스크립트에 대하여</h2>
+        <h4 class="list-date">2024.07.16</h4>
+    </div>-->
+</div>
+<div id="page-nation">
+
+</div>
+
+
+
+<SCRIPT>
+    /*헤더*/
+    window.onload = function (){ /*디폴트값*/
+        const notice = document.getElementById('notice');
+        notice.style.color='#00A3FF';
+    }
+
+    /*게시글 내용*/
+    document.addEventListener("DOMContentLoaded", function() {
+        const data = [
+            { title: "자바스크립트에 대하여", date: "2024.07.16" },
+            { title: "HTML5와 웹 표준", date: "2024.07.17" },
+            { title: "CSS Flexbox 활용하기", date: "2024.07.18" },
+            { title: "React 기본 개념", date: "2024.07.19" },
+            { title: "Node.js로 서버 구축하기", date: "2024.07.20" },
+            { title: "Vue.js 시작하기", date: "2024.07.21" },
+            { title: "AngularJS와 Angular 차이", date: "2024.07.22" },
+            { title: "TypeScript의 장점", date: "2024.07.23" },
+            { title: "ES6 새로운 기능", date: "2024.07.24" },
+            { title: "웹 보안 기초", date: "2024.07.25" },
+            { title: "AngularJS와 Angular 차이", date: "2024.07.22" },
+            { title: "TypeScript의 장점", date: "2024.07.23" }
+
+
+        ];
+
+        const itemsPerPage = 5; // 페이지당 항목 수
+        let currentPage = 1;    // 현재 페이지 초기화
+
+        function renderData(page) {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentData = data.slice(startIndex, endIndex);
+
+            const container = document.getElementById("list-container");
+            container.innerHTML = "";
+
+            currentData.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "list-table";
+
+                const h3 = document.createElement("h3");
+                h3.className = "list-title";
+                h3.textContent = item.title;
+
+                const h5 = document.createElement("h5");
+                h5.className = "list-date";
+                h5.textContent = item.date;
+
+                div.appendChild(h3);
+                div.appendChild(h5);
+
+                container.appendChild(div);
+            });
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(data.length / itemsPerPage);
+            const paginationContainer = document.getElementById("page-nation");
+            paginationContainer.innerHTML = "";
+
+            // 이전 버튼
+            const prevButton = document.createElement("button");
+            prevButton.textContent = "이전";
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener("click", () => {
+                currentPage--;
+                updateView();
+            });
+            paginationContainer.appendChild(prevButton);
+
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement("button");
+                pageButton.textContent = i;
+                if (i === currentPage) {
+                    pageButton.classList.add("active");
+                }
+                pageButton.addEventListener("click", () => {
+                    currentPage = i;
+                    updateView();
+                });
+                paginationContainer.appendChild(pageButton);
+            }
+
+            // 다음 버튼
+            const nextButton = document.createElement("button");
+            nextButton.textContent = "다음";
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener("click", () => {
+                currentPage++;
+                updateView();
+            });
+            paginationContainer.appendChild(nextButton);
+        }
+
+        function updateView() {
+            renderData(currentPage);
+            renderPagination();
+        }
+
+        updateView();
+    });
+
+</SCRIPT>
+
+
+</body>
+</html>
