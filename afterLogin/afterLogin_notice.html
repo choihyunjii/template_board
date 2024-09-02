@@ -49,6 +49,7 @@
             color: #00A3FF;
             position: relative;
             padding-left: 25px;
+
         }
 
         .logo-img{
@@ -68,6 +69,7 @@
             font-family: "IBM Plex Sans KR", sans-serif;
             font-size: 35px;
             margin: 0;
+            color: #4e5968;
         }
         .search-container{
             display: flex;
@@ -111,18 +113,14 @@
         .list-title{
             margin: 0;
             padding:10px 0 10px 0;
+            color: #4e5968;
         }
         .list-date{
             margin: 0;
             padding-bottom: 12px;
+            color: #8b95a1;
         }
-        /*페이지 네이션*/
-        /*  #page-nation{
-              border:1px solid black;
-              width: 40%;
-              margin: 40px auto 0;
-          }
-  */
+
         #page-nation {
             display: flex;
             justify-content: center;
@@ -144,6 +142,50 @@
             color: #00A3FF;
         }
 
+        /*회원이름 클릭시*/
+        #select-container {
+            display: none;
+            position: absolute;
+            top:45px;
+            right: 78px;
+        }
+        #for-logout{
+            width: 170px;
+            height: 100px;
+            position: relative;
+            border-radius: 10px;
+            float: right;
+            margin-right: 30px;
+            border: 1px solid gray;
+        }
+
+        #logout-title{
+            text-align: center;
+            padding: 0px;
+            margin:13px 0;
+            color: #4e5968;
+
+        }
+        #logout-text{
+            margin: 0;
+            width: 55px;
+            padding: 0;
+            color: #b4b4b4;
+        }
+
+        .logout-btn{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+        }
+        .logout-btn:hover #logout-text {
+            color:black;
+        }
+
 
 
     </style>
@@ -159,11 +201,19 @@
     </div>
     <div class="navigation-bar">
         <ul class="navigation">
-            <li id="notice" class="navigations">공지사항</li>
-            <li id="list" class="navigations"><a href="./afterLogin_list.html"> 글 목록</a></li>
+            <li id="notice" class="navigations">공지사항 </li>
+            <li id="list" class="navigations"><a href="./afterLogin_list.html">글 목록</a> </li>
             <li id="writing" class="navigations"><a href="../write/write.html">글 작성</a></li>
-            <li id="login"> <a href="../createUser/login.html">OOO님</a></li>
+            <li id="userGreeting" onclick="showLogout()"> <a href="../createUser/login.html">
+            </a></li>
         </ul>
+        <div id="for-logout" style="display: none">
+            <h4 id="logout-title"></h4>
+            <div class="logout-btn">
+                <img src="../img/logout.png" width="38px" height="38px" id="logout-img">
+                <h5 id="logout-text" onclick="logout()">로그아웃</h5>
+            </div>
+        </div>
     </div>
 </header>
 <body>
@@ -178,10 +228,6 @@
 </div>
 
 <div id="list-container">
-    <!--<div class="list-table">
-        <h2 class="list-title">자바스크립트에 대하여</h2>
-        <h4 class="list-date">2024.07.16</h4>
-    </div>-->
 </div>
 <div id="page-nation">
 
@@ -194,6 +240,38 @@
     window.onload = function (){ /*디폴트값*/
         const notice = document.getElementById('notice');
         notice.style.color='#00A3FF';
+    }
+
+    /*사용자 이름 넣기*/
+    const userName = sessionStorage.getItem('userName');
+
+    if (userName) {
+        const userGreetingElement = document.getElementById('userGreeting');
+        userGreetingElement.textContent = `${userName}님`;
+        const loginUser = document.getElementById('logout-title');
+        loginUser.innerHTML=`안녕하세요, ${userName}님.`;
+    } else {
+        console.log('sessionStorage에 사용자 이름이 없습니다.');
+    }
+
+    /*로그아웃*/
+    function logout(){
+        if(confirm('로그아웃 하시겠습니까?')){
+            sessionStorage.clear();
+            location.href='../beforeLogin/main-list.html';
+        }
+    }
+
+    /*로그아웃 보기*/
+    function showLogout() {
+        const logoutBox = document.getElementById('for-logout');
+        if (logoutBox.style.display === 'none' || logoutBox.style.display === '') {
+            // 'none' 또는 초기 값일 때 'block'으로 설정하여 활성화
+            logoutBox.style.display = 'block';
+        } else {
+            // 'block'일 때 'none'으로 설정하여 비활성화
+            logoutBox.style.display = 'none';
+        }
     }
 
     /*게시글 내용*/

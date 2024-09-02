@@ -8,23 +8,19 @@
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*두꺼운 폰트*/
         @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
 
-
-        a{
+        a {
             text-decoration: none;
-            color:black;
+            color: black;
         }
-        h1{
-
+        h1 {
             padding: 0;
             margin: 0;
         }
-        p{
+        p {
             margin: 0;
             padding: 5px;
         }
-
         .post-container {
-
             font-family: "IBM Plex Sans KR", sans-serif;
             background-color: #ffffff;
             padding: 20px;
@@ -33,9 +29,7 @@
             max-width: 600px;
             box-sizing: border-box;
             margin: 20px auto 0;
-
         }
-
         .post-title {
             font-size: 25px;
             margin-bottom: 10px;
@@ -43,23 +37,24 @@
             border-bottom: 2px solid #ececec;
             padding-bottom: 15px;
         }
-
-        .button-container{
-            border: 1px solid black;
+        .button-container {
             padding: 0;
             display: flex;
             gap: 13px;
             margin-left: auto;
+
         }
-        button{
-            background-color: transparent;
+        button {
+            background-color: #00A3FF;
             border: none;
             font-family: "IBM Plex Sans KR", sans-serif;
-            padding: 0;
+            padding: 5px 12px;
             margin: 0;
             cursor: pointer;
+            border-radius: 2px;
+            color: white;
+            font-size: 13px;
         }
-
         .post-meta {
             font-size: 15px;
             color: #999;
@@ -67,36 +62,111 @@
             display: flex;
             justify-content: space-between;
         }
-
         .post-image img {
             display: flex;
             margin: 0 auto;
             border-radius: 8px;
         }
-
         .post-content {
             font-size: 22px;
             line-height: 1.6;
             color: #555;
         }
-
         .back-link {
             display: inline-block;
             font-size: 14px;
             color: #00A3FF;
             text-decoration: none;
         }
-
         .back-link:hover {
             text-decoration: underline;
         }
-        .post-bottom{
-           border:1px solid black;
+        .post-bottom {
             display: flex;
+            margin-top: 30px;
+        }
 
+        /*글 쓰기*/
+        .write-container{
+            margin: 80px auto 0;
+            width: 65%;
+        }
+        .write-titleAndWriter{
+            width: 90%;
+            margin: 20px auto 0 ;
+            align-items: center;
+
+        }
+        label{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 22px;
+            margin: 0;
+            width: 100px;
+
+        }
+        .write-title{
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .write-title input{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            width:100%;
+            height: 38px;
+            border:none;
+            box-shadow: -2px 4px 4px -2px rgb(182, 182, 182);
+        }
+        input:focus{
+            outline: none;
         }
 
 
+
+        /*본문*/
+        .write-main{
+            display: flex;
+            margin: 15px auto 0 ;
+            width: 90%;
+            gap: 12px;
+
+        }
+        #main-text{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            width: 90%;
+            height: 220px;
+            box-shadow: -2px 4px 4px -2px rgb(182, 182, 182);
+            border: none;
+        }
+        #main-text:focus{
+            outline: none;
+        }
+
+
+        /*사진 첨부*/
+        .write-image{
+            width: 90%;
+            margin: 15px auto 0 ;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input::file-selector-button{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
+            border: none;
+            width: 110px;
+            height: 36px;
+            margin-right: 13px;
+            background-color: white;
+        }
+        .img-inform h6{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            padding: 0;
+            margin:0;
+            text-align: center;
+            color: #00A3FF;
+        }
     </style>
 </head>
 <body>
@@ -104,11 +174,35 @@
 <div id="main"></div>
 
 <script>
+
+    /*세션 로그인 여부 확인*/
+
+   /* function isUserLoggedIn() {
+        const cookieName = 'isLoggedIn=';
+        const cookies = document.cookie.split('; ');
+        return cookies.some(cookie => cookie.startsWith(cookieName));
+    }
+
+    // 페이지 로드 시 실행할 함수
+    function updateBackLink() {
+
+        if (isUserLoggedIn()) {
+            location.href = "../afterLogin/afterLogin_list.html";
+        } else {
+            location.href = "../beforeLogin/main-list.html";
+        }
+    }*/
+    /*뒤로가기*/
+    function backScreen(){
+        window.history.back();
+    }
+
+    // 페이지가 완전히 로드된 후에 updateBackLink 호출
+
     // 게시글 데이터를 가져오는 함수
     const fetchData = async () => {
         const post_id = sessionStorage.getItem("post_id");
         try {
-
             const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c`, {
                 method: 'GET',
                 headers: {
@@ -141,7 +235,7 @@
         const author = sessionStorage.getItem('id');
         console.log(id);
 
-        const isAuthor = author=== id;
+        const isAuthor = author === id;
 
         container.innerHTML = `
             <div class="post-container">
@@ -160,23 +254,154 @@
                     </p>
                 </div>
                 <div class="post-bottom">
-                     <a href="../afterLogin/afterLogin_list.html" class="back-link">← 목록으로 돌아가기</a>
+                     <a href="#" class="back-link" onclick="backScreen()">← 목록으로 돌아가기</a>
                      <div class="button-container" ${isAuthor ? "" : 'style="display:none;"'}>
-                        <button type="button">수정하기</button>
-                         <button type="button">삭제하기</button>
+                        <button type="button" id="updateBtn">수정하기</button>
+                        <button type="button" id="deleteBtn">삭제하기</button>
                     </div>
+                </div>
             </div>
-
         `;
+
         main.appendChild(container);
 
-        // 이벤트 리스너 설정
-        document.getElementById('backButton').addEventListener('click', () => {
-            window.location.href = '../afterLogin/afterLogin_list.html';
-        });
 
+        const deleteButton = document.getElementById('deleteBtn');
+        if (deleteButton) {
+            deleteButton.addEventListener('click', () => {
+                console.log('삭제');
+                deleteData(); // 삭제 함수 호출
+            });
+        }
+
+        const updateButton = document.getElementById('updateBtn');
+        if(updateButton){
+            updateButton.addEventListener('click',()=>{
+                console.log('수정하기');
+                updateData();
+            });
+        }
     };
 
+    // 글 삭제하기
+    const deleteData = async () => {
+        const post_id = sessionStorage.getItem("post_id");
+        console.log('버튼 누름');
+        try {
+            const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c/${post_id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                console.log('삭제 성공');
+                alert('글이 삭제되었습니다.');
+                window.location.href = '../afterLogin/afterLogin_list.html';
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('삭제 실패:', error);
+            alert('글 삭제에 실패하였습니다.');
+        }
+    };
+
+
+    //글 수정하기
+    const updateData = async () => {
+        const post_id = sessionStorage.getItem("post_id");
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const responseData = await response.json();
+            console.log(responseData);
+
+            // 해당 id와 일치하는 데이터를 찾아서 표시
+            const data = responseData.find(item => item.post_id === post_id);
+            if (data) {
+                updateView(data.title, data.mainText, data.img);
+            } else {
+                console.error('No data found for the provided ID');
+            }
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    // 데이터를 가져와서 수정할 수 있는 폼으로 표시
+    const updateView = (title, mainText, img) => {
+        const main = document.getElementById("main");
+        main.innerHTML = `
+               <div class="write-container">
+                    <div class="write-box">
+                        <div class="write-titleAndWriter">
+                            <div class="write-title">
+                                <label for="title">글 제목</label>
+                                <input type="text" id="title"  style="font-size: 18px;" value="${title}">
+                            </div>
+
+                        </div>
+                        <div class="write-main">
+                           <label for="main-text">본문</label>
+                            <input style="font-size: 20px;"  id="main-text" value="${mainText}" >
+
+                        </div>
+                        <div class="write-image">
+                            <div class="img-inform">
+                               <label for="image-upload">사진 첨부</label>
+                                <h6>수정 불가</h6>
+                            </div>
+                            <input type="file" id="image-upload" >
+                        </div>
+                         <div class="post-bottom">
+                             <div class="button-container" >
+                                <button type="button" id="saveButton">저장하기</button>
+                                <button type="button" id="deleteButton">삭제하기</button>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            `;
+
+
+
+        document.getElementById('saveButton').addEventListener('click', saveData);
+        document.getElementById('deleteButton').addEventListener('click', deleteData);
+    };
+    const saveData = async () => {
+        const post_id = sessionStorage.getItem("post_id");
+        const title = document.getElementById("title").value;
+        const mainText = document.getElementById("main-text").value;
+
+        try {
+
+            const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c/${post_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, mainText })
+            });
+
+            if (response.ok) {
+                alert('글이 성공적으로 수정되었습니다.');
+                window.location.href = '../afterLogin/afterLogin_list.html';
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('수정 실패:', error);
+            alert('글 수정에 실패하였습니다.');
+        }
+    };
 </script>
 </body>
 </html>
