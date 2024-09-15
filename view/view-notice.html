@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시글 보기</title>
+    <title>공지사항 상세보기</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Black+Han+Sans&family=Do+Hyeon&family=Gasoek+One&family=Nanum+Gothic:wght@400;700;800&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*두꺼운 폰트*/
         @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
 
+
+        body{
+        }
+
+        /*헤더*/
+        header{
+            box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
+            display: flex;
+            justify-content: space-between;
+            height: 60px;
+
+        }
+        .navigation-bar ul{
+            display: flex;
+            list-style: none;
+            margin-right: 80px;
+            gap: 40px;
+            padding: 0;
+        }
+        .navigation-bar li{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-size: 20px;
+            display: inline;
+        }
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+        .logo{
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-title{
+            font-family: "IBM Plex Sans KR", sans-serif;
+            margin: 0;
+            font-size: 35px;
+            color: #00A3FF;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .logo-img{
+            position: absolute;
+            top: 8px;
+            left: 253px;
+        }
+
+        /*공지사항 및 서치박스*/
         a {
             text-decoration: none;
             color: black;
@@ -193,15 +243,47 @@
         }
 
 
+
+
     </style>
+
 </head>
+
+<header>
+    <div class="logo">
+        <a href="./main-notice.html">
+            <h3 class="logo-title">SHARE BOARD</h3>
+            <img src="../img/logo.png" width="45" height="25" class="logo-img">
+        </a>
+    </div>
+    <div class="navigation-bar">
+        <ul class="navigation">
+            <li id="notice" class="navigations">공지사항</li>
+            <li id="list" class="navigations"><a href="./main-list.html"> 글 목록</a></li>
+            <li id="login"> <a href="../createUser/login.html">로그인</a></li>
+        </ul>
+    </div>
+</header>
 <body>
+<!--<div class="main-top">-->
+<!--    <h4 class="main-title">공지사항</h4>-->
+<!--</div>-->
 
-<div id="main"></div>
+<div id="main">
 
-<script>
+</div>
 
 
+<SCRIPT>
+    /*헤더*/
+    window.onload = function (){ /*디폴트값*/
+        const notice = document.getElementById('notice');
+        notice.style.color='#00A3FF';
+        fetchData();
+
+    }
+
+    /*게시글 내용*/
     /*뒤로가기*/
     function backScreen(){
         window.history.back();
@@ -209,9 +291,9 @@
 
     // 게시글 데이터를 가져오는 함수
     const fetchData = async () => {
-        const postID = sessionStorage.getItem("postID");
+        const postID = sessionStorage.getItem("notice-postID");
         try {
-            const response = await fetch(`http://localhost:8080/api/json/ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a`, {
+            const response = await fetch(`http://localhost:8080/api/json/29b79579ef844418808b93ddf7c26f50a2beb4710cc0ad567cb3a027ee8983ac`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -223,7 +305,7 @@
             // 해당 id와 일치하는 데이터를 찾아서 표시
             const data = responseData.find(item => item.postID === postID);
             if (data) {
-                createView(data.title, data.writer, data.mainText, data.img, new Date(data.date).toLocaleDateString(), data.id);
+                createView(data.title, data.writer, data.mainText, new Date(data.date).toLocaleDateString(), data.id);
                 console.log(postID);
             } else {
                 console.error('No data found for the provided ID');
@@ -233,9 +315,8 @@
         }
     };
 
-    fetchData();
 
-    const createView = (title, writer, mainText, img, date, id) => {
+    const createView = (title, writer, mainText, date, id) => {
         const main = document.getElementById("main");
         const container = document.createElement("div");
         container.className = "container";
@@ -253,9 +334,7 @@
                     <span class="post-author">${writer}</span>
                     <span class="post-date">${date}</span>
                 </div>
-                <div class="post-image">
-                    <img src="${img}" alt="게시글 이미지" width="630px" height="360px">
-                </div>
+
                 <div class="post-content">
                     <p>
                         ${mainText}
@@ -355,7 +434,6 @@
         let title = data.title
         let writer = data.writer
         let mainText = data.mainText
-        let img = data.img
         let date = new Date(data.date).toLocaleDateString();
 
         const main = document.getElementById("main");
@@ -367,9 +445,7 @@
                     <span class="post-author">${writer}</span>
                     <span class="post-date">${date}</span>
                 </div>
-                <div class="post-image">
-                    <img src="${img}" alt="게시글 이미지" width="630px" height="360px">
-                </div>
+
                 <div class="post-content">
 
 
@@ -403,13 +479,13 @@
         const mainText = document.getElementById("textArea").value;
 
         let updateOBJ = {
-                postID:postID,
-                id: data.id,
-                title: title,
-                writer: data.writer,
-                date: data.date,
-                img: data.img,
-                mainText: mainText
+            postID:postID,
+            id: data.id,
+            title: title,
+            writer: data.writer,
+            date: data.date,
+            img: data.img,
+            mainText: mainText
 
         };
 
@@ -435,6 +511,11 @@
         }
     };
 
-</script>
+
+
+
+</SCRIPT>
+
+
 </body>
 </html>

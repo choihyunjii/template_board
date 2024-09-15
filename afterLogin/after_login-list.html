@@ -9,10 +9,6 @@
         @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
 
 
-
-        body{
-        }
-
         /*헤더*/
         header{
             box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
@@ -188,10 +184,22 @@
             cursor: pointer;
 
         }
+
         .logout-btn:hover #logout-text {
             color:black;
         }
 
+        #no-text{
+            padding: 0;
+            margin: 0;
+        }
+
+        .no-data{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
 
     </style>
@@ -207,9 +215,9 @@
     </div>
     <div class="navigation-bar">
         <ul class="navigation">
-            <li id="notice" class="navigations"><a href="./afterLogin_notice.html">공지사항</a> </li>
+            <li id="notice" class="navigations"><a href="after_login-notice.html">공지사항</a> </li>
             <li id="list" class="navigations">글 목록</li>
-            <li id="writing" class="navigations"><a href="../write/write.html">글 작성</a></li>
+            <li id="writing" class="navigations"><a href="../write/write-user.html">글 작성</a></li>
             <li id="userGreeting" onclick="showLogout()"> <a href="../createUser/login.html">
             </a></li>
         </ul>
@@ -226,7 +234,7 @@
 <body>
 <div class="main-top">
     <h4 class="main-title">글 목록</h4>
-    <div class="search-container">
+    <div id="search-container">
         <input type="text" class="search" style="width: 210px; height: 30px;" placeholder="검색어를 입력하세요.">
         <button class="search-button" type="button">
             <img src="../img/whiteGlass.png" width="22" height="22" class="search-img">
@@ -235,6 +243,11 @@
 </div>
 
 <div id="list-container">
+    <div id="no-data">
+        <h2 id="no-text">작성된 글이 없어요.&nbsp 글을 작성해보세요.</h2>
+        <img src="../img/yellowSmile.png" width="40px" id="no-img">
+
+    </div>
 </div>
 <div id="page-nation">
 
@@ -243,6 +256,17 @@
 
 
 <SCRIPT>
+
+    /*관리자만 글작성*/
+    const role = sessionStorage.getItem('role');
+
+    // role이 '관리자'일 때만 글 작성 메뉴를 보이게 함
+    if (role === '회원') {
+        document.getElementById('writing').style.display = 'block';  // 보여줌
+    } else {
+        document.getElementById('writing').style.display = 'none';   // 숨김
+    }
+
     /*헤더*/
     window.onload = function (){ /*디폴트값*/
         const list = document.getElementById('list');
@@ -294,7 +318,7 @@
         // 서버에서 데이터를 가져오는 함수
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c`, {
+                const response = await fetch(`http://localhost:8080/api/json/ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -321,6 +345,16 @@
             const startIndex = (page - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const currentData = data.slice(startIndex, endIndex); // 현재 페이지의 데이터
+
+            if(data.length === 0){ // 데이터가 없으면
+                document.getElementById('search-container').style.display = 'none';
+                document.getElementById('no-data').style.display = ''
+            } else { // 데이터가 있으면
+                document.getElementById('search-container').style.display = '';
+                document.getElementById('no-data').style.display = 'none'
+            }
+
+
 
             const container = document.getElementById("list-container");
             container.innerHTML = ""; // 기존 내용을 초기화
@@ -389,7 +423,9 @@
 
         // 뷰를 업데이트하는 함수
         function updateView() {
+            console.log(data);
             renderData(currentPage);
+
             renderPagination();
         }
 
@@ -398,9 +434,9 @@
 
         // 글 클릭 시 실행되는 함수
         const handleCellClick = (item) => {
-            const post_id = item.post_id;
-            console.log(post_id);
-            sessionStorage.setItem("post_id", post_id);
+            const postID = item.postID;
+            console.log(postID);
+            sessionStorage.setItem("postID", postID);
             location.href = "../view/view-list.html";
         };
     });

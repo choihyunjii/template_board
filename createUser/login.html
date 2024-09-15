@@ -17,6 +17,7 @@
                 font-size: 50px;
                 text-align: center;
                 margin: 0;
+                cursor: pointer;
             }
 
             /*토글 버튼*/
@@ -113,7 +114,7 @@
         </style>
     </head>
     <body>
-    <h1 class="title">
+    <h1 class="title" onclick="reload()">
         로그인
     </h1>
 <div class="form-box">
@@ -139,9 +140,14 @@
 
         </div>
         <button type="button" id="goSignup"><a href="./sign-up.html">회원가입</a></button>
-        
+
     </div>
 <script>
+
+    /*로그인 리로드*/
+    function reload(){
+        window.location.reload();
+    }
 
     /*토글*/
     var btn = document.getElementById('btn');
@@ -157,12 +163,14 @@
         memberBtn.style.color = 'white';
         adminBtn.style.color = 'black';
         document.querySelector('.role').value = '회원';
+        sessionStorage.setItem('author', '회원');
     }
     function rightClick(){
         btn.style.left='125px';
         memberBtn.style.color = 'black';
         adminBtn.style.color = 'white';
         document.querySelector('.role').value = '관리자';
+        sessionStorage.setItem('admin', '관리자');
     }
 
     /*로그인 버튼 클릭시*/
@@ -179,7 +187,7 @@
 
         // 서버로 GET 요청 보내기
         try {
-            const response = await fetch(`http://localhost:8080/api/builder/metadata/aa3f834ec3f2b980a97f8a60eac696fc05f2c5e52cf731e802deba958f690a4c`, {
+            const response = await fetch(`http://localhost:8080/api/json/7459a8c008c00153adf6d4f53972adec63ad904a73f74e2686c15e98698eb92`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -199,17 +207,18 @@
                     // 세션 스토리지에 사용자 이름 저장
                     sessionStorage.setItem('userName', data.name);
                     sessionStorage.setItem('id', data.id);
+                    sessionStorage.setItem('role', data.role);  // role 저장
 
 
                     // 사용자 역할에 따라 페이지 이동
                     if (data.role === '회원') {
                         console.log('회원');
                         alert('로그인 성공!');
-                        window.location.href = '../afterLogin/afterLogin_list.html';
+                        window.location.href = '../afterLogin/after_login-list.html';
                     } else if (data.role === '관리자') {
                         console.log('관리자');
                         alert('로그인 성공!');
-                        window.location.href = '../afterLogin/afterLogin_notice.html';
+                        window.location.href = '../afterLogin/after_login-notice.html';
                     } else {
                         console.error('알 수 없는 역할:', data.role);
                         alert('알 수 없는 역할입니다.');

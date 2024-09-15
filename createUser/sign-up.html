@@ -194,7 +194,7 @@
 
         try {
 
-            const response = await fetch(`http://localhost:8080/api/builder/metadata/aa3f834ec3f2b980a97f8a60eac696fc05f2c5e52cf731e802deba958f690a4c`, {
+            const response = await fetch(`http://localhost:8080/api/json/7459a8c008c00153adf6d4f53972adec63ad904a73f74e2686c15e98698eb92`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -202,7 +202,7 @@
                 body: JSON.stringify(obj) // 위에서 정한 객체를 json으로 바꿔줌
             });
 
-            const result = await response.json();
+            const result = await response.text();
             console.log(result);
             if (response.ok) {
                 if (confirm("회원가입 성공")){

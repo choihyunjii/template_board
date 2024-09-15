@@ -79,8 +79,8 @@
         .write-title input{
             width:100%;
             height: 38px;
-            border:none;
-            box-shadow: -2px 4px 4px -2px rgb(182, 182, 182);
+            border: 1px solid #939393;
+            border-radius: 3px;
         }
         input:focus{
             outline: none;
@@ -99,8 +99,9 @@
         #main-text{
             width: 90%;
             height: 220px;
-            box-shadow: -2px 4px 4px -2px rgb(182, 182, 182);
-            border: none;
+            border: 1px solid #939393;
+            border-radius: 3px;
+            font-family: "IBM Plex Sans KR", sans-serif;
         }
         #main-text:focus{
             outline: none;
@@ -116,12 +117,13 @@
         }
         input::file-selector-button{
             font-family: "IBM Plex Sans KR", sans-serif;
-            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.2);
-            border: none;
+            margin-left: 16px;
             width: 110px;
             height: 36px;
             margin-right: 13px;
-            background-color: white;
+            border: 1px solid #E0E0E0;
+            border-radius: 3px;
+            background-color: #F5F5F5;
         }
         .img-inform h6{
             font-family: "IBM Plex Sans KR", sans-serif;
@@ -170,7 +172,6 @@
 
 
 
-
     </style>
 
 </head>
@@ -185,7 +186,7 @@
     <div class="navigation-bar">
         <ul class="navigation">
             <li id="notice" class="navigations"><a href="../beforeLogin/main-notice.html">공지사항</a> </li>
-            <li id="list" class="navigations"><a href="../afterLogin/afterLogin_list.html"> 글 목록</a></li>
+            <li id="list" class="navigations"><a href="../afterLogin/after_login-list.html"> 글 목록</a></li>
             <li id="writing" class="navigations">글 작성</li>
             <li id="userGreeting"> <a href="../createUser/login.html">님</a></li>
         </ul>
@@ -197,28 +198,31 @@
         <div class="write-titleAndWriter">
             <div class="write-title">
                 <label for="title">글 제목</label>
-                <input type="text" id="title"  style="font-size: 18px;">
+                <input type="text" id="title"  style="font-size: 18px; font-weight: bold;">
             </div>
 
         </div>
         <div class="write-main">
-           <label for="main-text">본문</label>
+            <label for="main-text">본문</label>
             <textarea style="resize: none; font-size: 18px" id="main-text" ></textarea>
 
         </div>
+
         <div class="write-image">
-            <div class="img-inform">
-               <label for="image-upload">사진 첨부</label>
+            <form id="imageForm">
+                <label for="image-upload">사진 첨부</label>
                 <h6>수정 불가</h6>
-            </div>
-            <input type="file" id="image-upload" >
+                <input type="file" id="image-upload" name="file" accept="image/*" required>
+                <input type="text" id="imageTableID" name="tableHash" required style="display: none"><br>
+            </form>
+
         </div>
 
     </div>
 </div>
 <div class="click-btn">
     <button id="write" type="button" >작성하기</button>
-    <button id="view-list" type="submit" ><a href="../afterLogin/afterLogin_list.html">목록보기</a> </button>
+    <button id="view-list" type="submit" ><a href="../afterLogin/after_login-list.html">목록보기</a> </button>
 </div>
 
 
@@ -241,107 +245,82 @@
         console.log('sessionStorage에 사용자 이름이 없습니다.');
     }
 
+
+
     /* 이미지 업로드 */
     document.getElementById('write').addEventListener('click', async (event) => {
         event.preventDefault();
-        const imageUrl = await fileUpload();
-        if (imageUrl !== null) {
-            await sendData(imageUrl);
-        }
+        fileUpload();
     });
 
     const fileUpload = async () => {
-        let email = "such1123@naver.com";
+        const form = document.getElementById('imageForm');
+        const tableValue = 'ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a'; // 테이블 해시 하드 코딩
 
-        try {
-            let fileInput = document.getElementById("image-upload");
-            let file = fileInput.files[0];
+        document.getElementById('imageTableID').value = tableValue;
+        const formData = new FormData(form);
+        const token = '2GhON7btNo8h9+nLnfBSuYGJiRR9YnCG4JLOG819hMfCENsAGFcWu6rKvU2PZBP4f0gQd06vNTqpzc3Mo99XHw=='; // 사용자 토큰 하드코딩
 
-            // 파일 선택 여부 체크
-            if (file) {
-                const allowedExtensions = [".jpg", ".jpeg", ".png", ".mp4"];
-                const fileExtension = file.name.slice(file.name.lastIndexOf(".")); // 파일의 확장자 추출
-
-                // 확장자 검사
-                if (!allowedExtensions.includes(fileExtension.toLowerCase())) {
-                    alert("지원되지 않는 파일 형식입니다. .jpg, .jpeg, .png, .mp4 파일만 업로드 가능합니다.");
-                    return null;  // 문제 발생시 null 반환
-                }
-            }
-
-            const formData = new FormData();
-
-            // 선택된 파일을 FormData에 추가
-            if (file) {
-                formData.append("file", file); // "file"은 서버에서 파일을 처리하는 데 사용될 키 이름
-            } else {
-                formData.append("file", null); // 파일이 없을 경우 null 추가
-            }
-            formData.append("email", `${email}`);  // id는 이미 상단에서 선언된 변수 사용
-
-            // 서버로 FormData 전송
-            const response = await fetch(`http://localhost:8080/api/blob/upload/email`, {
-                method: "POST",
-                body: formData,
-            });
-
-            if (!response.ok) {
-                const errorResponse = await response.json();
-                throw new Error(errorResponse.message || "파일 업로드에 실패하였습니다.");
-                console.log('전송');
-            }
-
-            const data = await response.json();
-            return file ? data.message : "NULL";
-        } catch (error) {
-            console.error('Error:', error);
-            alert("파일 업로드 실패: " + error.message);
-            return null;
-        }
+        fetch('http://localhost:8080/api/medias/image', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                sendData(data.mediaFileResourceURL);
+            })
     };
+
 
     /* 글 작성하기 */
     const sendData = async (imageUrl) => {
-        let currentPostId = sessionStorage.getItem('post_id');
+        let currentPostId = sessionStorage.getItem('postID');
         if (currentPostId === null) {
             currentPostId = "1";
-            sessionStorage.setItem('post_id', currentPostId);
+            sessionStorage.setItem('postID', currentPostId);
         } else {
             currentPostId = parseInt(currentPostId, 10) + 1;
-            sessionStorage.setItem('post_id', currentPostId.toString());
+            sessionStorage.setItem('postID', currentPostId.toString());
         }
 
-        const post_id = parseInt(sessionStorage.getItem("post_id"))+1;
+        const postID = parseInt(sessionStorage.getItem("postID"))+1;
         const id = sessionStorage.getItem('id');
         const title = document.getElementById('title').value;
         const writer = userName;
         const date = new Date().toISOString(); // 현재 날짜를 ISO 포맷으로
+        const img = imageUrl;
         const mainText = document.getElementById('main-text').value;
 
         const obj = {
-            post_id:post_id,
+            postID:postID,
             id: id,
             title: title,
             writer: writer,
             date: date,
-            img: imageUrl,
+            img: img,
             mainText: mainText
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/api/builder/metadata/3e3b74a6195d98627a690f19d96a4e6602fb5053d0a74529032af26ec5c7571c`, {
+            const response = await fetch(`http://localhost:8080/api/json/ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(obj)
+                body: JSON.stringify(obj) // js 객체를 json규약에 맞게 바꿔주는 코드임
             });
 
             const result = await response.json();
+
             console.log(result);
+
             if (response.ok) {
                 if (confirm("글 작성 성공")) {
-                    location.href = "../afterLogin/afterLogin_list.html";
+                    location.href = "../afterLogin/after_login-list.html";
                 } else {
                     console.log("User chose to stay on the page.");
                 }
