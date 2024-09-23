@@ -13,21 +13,21 @@
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*두꺼운 폰트*/
     @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
     /*헤더*/
-    header{
+    #header{
         box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
         display: flex;
         justify-content: space-between;
         height: 60px;
 
     }
-    .navigation-bar ul{
+    #navigation-bar ul{
         display: flex;
         list-style: none;
         margin-right: 80px;
         gap: 40px;
         padding: 0;
     }
-    .navigation-bar li{
+    #navigation-bar li{
         font-family: "IBM Plex Sans KR", sans-serif;
         font-size: 20px;
         display: inline;
@@ -36,12 +36,13 @@
         text-decoration: none;
         color: black;
     }
-    .logo{
+    #logo{
         display: flex;
         align-items: center;
+        position: relative;
     }
 
-    .logo-title{
+    #logo-title{
         font-family: "IBM Plex Sans KR", sans-serif;
         margin: 0;
         font-size: 35px;
@@ -50,12 +51,12 @@
         padding-left: 25px;
     }
 
-    .logo-img{
+    #logo-img{
         position: absolute;
-        top: 8px;
+        top:5px;
         left: 253px;
     }
-    .write-titleAndWriter{
+    #write-titleAndWriter{
         width: 90%;
         margin: 20px auto;
         align-items: center;
@@ -68,13 +69,13 @@
         width: 100px;
 
     }
-    .write-title{
+    #write-title{
         display: flex;
         gap: 22px;
         align-items: center;
     }
 
-    .write-title input{
+    #write-title input{
         margin-left: 14px;
         width:1220px;
         height: 38px;
@@ -86,13 +87,13 @@
     }
 
     /*all*/
-    .all-container{
+    #all-container{
         width: 65%;
         margin: 80px auto 0;
 
     }
     /*본문정리*/
-    .main-text label {
+    #main-text label {
         float: left;
         padding-left: 50px;
     }
@@ -104,14 +105,13 @@
         margin-left: 150px;
     }
 
-    .main-text::after {
+    #main-text::after {
         content: "";
         display: block;
         clear: both; /* float가 다른 요소에 영향을 미치지 않게 함 */
     }
 
 
-    /*코드 에디터*/
 
 
     /* 툴바의 기본적인 레이아웃 조정 */
@@ -144,13 +144,13 @@
     }
 
     /*버튼 클릭*/
-    .click-btn{
+    #click-btn{
         width: 63%;
         margin: 40px auto 0 ;
         text-align: right;
     }
 
-    .click-btn button{
+    #click-btn button{
         font-family: "IBM Plex Sans KR", sans-serif;
         width: 100px;
         height: 35px;
@@ -178,15 +178,15 @@
     }
 
 </style>
-<header>
-    <div class="logo">
+<header id="header">
+    <div id="logo">
         <a href="./main-notice.html">
-            <h3 class="logo-title">SHARE BOARD</h3>
-            <img src="../img/logo.png" width="45" height="25" class="logo-img">
+            <h3 id="logo-title">SHARE BOARD</h3>
+            <img src="../img/logo.png" width="45" height="25" id="logo-img">
         </a>
     </div>
-    <div class="navigation-bar">
-        <ul class="navigation">
+    <div id="navigation-bar">
+        <ul id="navigation">
             <li id="notice" class="navigations"><a href="../beforeLogin/main-notice.html">공지사항</a> </li>
             <li id="list" class="navigations"><a href="../afterLogin/after_login-list.html"> 글 목록</a></li>
             <li id="writing" class="navigations">글 작성</li>
@@ -195,15 +195,15 @@
     </div>
 </header>
 <body>
-<div class="all-container">
-    <div class="write-titleAndWriter">
-        <div class="write-title">
+<div id="all-container">
+    <div id="write-titleAndWriter">
+        <div id="write-title">
             <label for="title">글 제목</label>
             <input type="text" id="title"  style="font-size: 18px;">
         </div>
 
     </div>
-    <div class="main-text">
+    <div id="main-text">
         <label for="title">본문 </label>
         <div id="editor">
             <p>Hello World!</p>
@@ -212,7 +212,7 @@
         </div>
     </div>
 </div>
-<div class="click-btn">
+<div id="click-btn">
     <button id="write" type="button" onclick="sendData()" >작성하기</button>
     <button id="view-list" type="submit"  ><a href="../afterLogin/after_login-notice.html">목록보기</a> </button>
 </div>

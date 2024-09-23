@@ -20,7 +20,7 @@
             margin: 0;
             padding: 5px;
         }
-        .post-container {
+        #post-container {
             font-family: "IBM Plex Sans KR", sans-serif;
             background-color: #ffffff;
             padding: 20px;
@@ -30,14 +30,14 @@
             box-sizing: border-box;
             margin: 50px auto 0;
         }
-        .post-title {
+        #post-title {
             font-size: 25px;
             margin-bottom: 10px;
             color: #333;
             border-bottom: 2px solid #ececec;
             padding-bottom: 15px;
         }
-        .button-container {
+        #button-container {
             padding: 0;
             display: flex;
             gap: 13px;
@@ -55,46 +55,46 @@
             color: white;
             font-size: 13px;
         }
-        .post-meta {
+        #post-meta {
             font-size: 15px;
             color: #999;
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
         }
-        .post-image img {
+        #post-image img {
             display: flex;
             margin: 0 auto;
             border-radius: 8px;
         }
-        .post-content {
+        #post-content {
             font-size: 22px;
             line-height: 1.6;
             color: #555;
             margin-top: 10px;
         }
 
-        .back-link {
+        #back-link {
             display: inline-block;
             font-size: 14px;
             color: #00A3FF;
             text-decoration: none;
         }
-        .back-link:hover {
+        #back-link:hover {
             text-decoration: underline;
         }
-        .post-bottom {
+        #post-bottom {
             display: flex;
             margin-top: 30px;
         }
 
 
         /*글 쓰기*/
-        .write-container{
+        #write-container{
             margin: 80px auto 0;
             width: 65%;
         }
-        .write-titleAndWriter{
+        #write-titleAndWriter{
             width: 90%;
             margin: 20px auto 0 ;
             align-items: center;
@@ -107,13 +107,13 @@
             width: 100px;
 
         }
-        .write-title{
+        #write-title{
             display: flex;
             gap: 22px;
             align-items: center;
         }
 
-        .write-title input{
+        #write-title input{
             font-family: "IBM Plex Sans KR", sans-serif;
             width:100%;
             height: 38px;
@@ -124,7 +124,7 @@
 
 
         /*본문*/
-        .write-main{
+        #write-main{
             display: flex;
             margin: 15px auto 0 ;
             width: 90%;
@@ -144,7 +144,7 @@
 
 
         /*사진 첨부*/
-        .write-image{
+        #write-image{
             width: 90%;
             margin: 15px auto 0 ;
             display: flex;
@@ -160,7 +160,7 @@
             margin-right: 13px;
             background-color: white;
         }
-        .img-inform h6{
+        #img-inform h6{
             font-family: "IBM Plex Sans KR", sans-serif;
             padding: 0;
             margin:0;
@@ -187,7 +187,7 @@
 
 
         /*수정하기 클릭 후*/
-        .bottom{
+        #bottom{
             display: flex;
             margin-top: 10px;
         }
@@ -246,24 +246,24 @@
         const isAuthor = author === id;
 
         container.innerHTML = `
-            <div class="post-container">
-                <h1 class="post-title">${title}</h1>
+            <div id="post-container">
+                <h1 id="post-title">${title}</h1>
 
-                <div class="post-meta">
-                    <span class="post-author">${writer}</span>
-                    <span class="post-date">${date}</span>
+                <div id="post-meta">
+                    <span id="post-author">${writer}</span>
+                    <span id="post-date">${date}</span>
                 </div>
-                <div class="post-image">
+                <div id="post-image">
                     <img src="${img}" alt="게시글 이미지" width="630px" height="360px">
                 </div>
-                <div class="post-content">
+                <div id="post-content">
                     <p>
                         ${mainText}
                     </p>
                 </div>
-                <div class="post-bottom">
-                     <a href="#" class="back-link" onclick="backScreen()">← 목록으로 돌아가기</a>
-                     <div class="button-container" ${isAuthor ? "" : 'style="display:none;"'}>
+                <div id="post-bottom">
+                     <a href="#" id="back-link" onclick="backScreen()">← 목록으로 돌아가기</a>
+                     <div id="button-container" ${isAuthor ? "" : 'style="display:none;"'}>
                         <button type="button" id="updateBtn">수정하기</button>
                         <button type="button" id="deleteBtn">삭제하기</button>
                     </div>
@@ -360,25 +360,25 @@
 
         const main = document.getElementById("main");
         main.innerHTML = `
-               <div class="post-container">
-                <h1 class="post-title"><input value="${title}"  id="title"></h1>
+               <div id="post-container">
+                <h1 id="post-title"><input value="${title}"  id="title"></h1>
 
-                <div class="post-meta">
-                    <span class="post-author">${writer}</span>
-                    <span class="post-date">${date}</span>
+                <div id="post-meta">
+                    <span id="post-author">${writer}</span>
+                    <span id="post-date">${date}</span>
                 </div>
-                <div class="post-image">
+                <div id="post-image">
                     <img src="${img}" alt="게시글 이미지" width="630px" height="360px">
                 </div>
-                <div class="post-content">
+                <div id="post-content">
 
 
                    <textarea id="textArea">${mainText}</textarea>
 
                 </div>
-                <div class="bottom">
+                <div id="bottom">
                      <a href="#" class="back-link" onclick="backScreen()">← 이전으로</a>
-                     <div class="button-container">
+                     <div id="button-container">
                         <button type="button" id="saveButton">저장하기</button>
                         <button type="button" id="deleteBtn">삭제하기</button>
                     </div>

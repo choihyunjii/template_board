@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인 화면</title>
+    <title>회원가입 화면</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap'); /*전체 폰트*/
 
-        body{
+
+        #form-box{
             font-family: "IBM Plex Sans KR", sans-serif;
             width: 70%;
             margin: 40px auto;
         }
 
-        .title{
+        #title{
             font-size: 50px;
             text-align: center;
             margin: 0;
         }
 
         /*토글 버튼*/
-        .button-box{
+        #button-box{
             width: 260px;
             height: 42px;
             margin: 5px auto;
@@ -53,7 +54,7 @@
         }
 
         /*회원가입 창*/
-        .input-container{
+        #input-container{
             padding-top: 15px;
             display: flex;
             flex-direction: column;
@@ -76,7 +77,7 @@
         input:focus{
             outline: none;
         }
-        .signUP-btn button{
+        #signUP-container button{
             font-family: "IBM Plex Sans KR", sans-serif;
             width: 380px;
             height: 55px;
@@ -104,39 +105,41 @@
     </style>
 </head>
 <body>
-<h1 class="title">
-    회원가입
-</h1>
-<div class="form-box">
-    <div class="button-box">
-        <div id="btn"></div>
-        <button type="button" class="toggle-btn" onclick="leftClick()" id="member-btn">
-            <input type="hidden" class="role" value="회원"> 회원</button>
-        <button type="button" class="toggle-btn" onclick="rightClick()" id="admin-btn">
-            <input type="hidden" class="role" value="회원">관리자</button>
-    </div>
-</div>
-<div class="input-container">
-    <div class="input-box">
-        <h4>아이디</h4>
-        <input type="text" id="id" required>
-    </div>
-    <div class="input-box">
-        <h4>이름</h4>
-        <input type="text" id="name" required>
-    </div>
-    <div class="input-box">
-        <h4>비밀번호</h4>
-        <input type="password" id="pass-word" required>
-    </div>
-    <div class="input-box">
-        <h4>비밀번호 확인</h4>
-        <input type="password" id="confirm-pw" required>
-    </div>
-    <div class="signUP-btn">
-        <button type="button" id="signUP-btn" onclick="sendData()">회원가입</button>
-    </div>
+<div id="form-box">
+    <h1 id="title">
+        회원가입
+    </h1>
 
+        <div id="button-box">
+            <div id="btn"></div>
+            <button type="button" class="toggle-btn" onclick="leftClick()" id="member-btn">
+                <input type="hidden" class="role" value="회원"> 회원</button>
+            <button type="button" class="toggle-btn" onclick="rightClick()" id="admin-btn">
+                <input type="hidden" class="role" value="회원">관리자</button>
+        </div>
+
+    <div id="input-container">
+        <div class="input-box">
+            <h4>아이디</h4>
+            <input type="text" id="id" required>
+        </div>
+        <div class="input-box">
+            <h4>이름</h4>
+            <input type="text" id="name" required>
+        </div>
+        <div class="input-box">
+            <h4>비밀번호</h4>
+            <input type="password" id="pass-word" required>
+        </div>
+        <div class="input-box">
+            <h4>비밀번호 확인</h4>
+            <input type="password" id="confirm-pw" required>
+        </div>
+        <div id="signUP-container">
+            <button type="button" id="signUP-btn" onclick="sendData()">회원가입</button>
+        </div>
+
+    </div>
 </div>
 <script>
 

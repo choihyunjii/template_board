@@ -11,25 +11,21 @@
 
 
 
-        body{
-        }
-
-        /*헤더*/
-        header{
+        #header{
             box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
             display: flex;
             justify-content: space-between;
             height: 60px;
 
         }
-        .navigation-bar ul{
+        #navigation-bar ul{
             display: flex;
             list-style: none;
             margin-right: 80px;
             gap: 40px;
             padding: 0;
         }
-        .navigation-bar li{
+        #navigation-bar li{
             font-family: "IBM Plex Sans KR", sans-serif;
             font-size: 20px;
             display: inline;
@@ -38,45 +34,45 @@
             text-decoration: none;
             color: black;
         }
-        .logo{
+        #logo{
             display: flex;
             align-items: center;
+            position: relative;
         }
 
-        .logo-title{
+        #logo-title{
             font-family: "IBM Plex Sans KR", sans-serif;
             margin: 0;
             font-size: 35px;
             color: #00A3FF;
             position: relative;
             padding-left: 25px;
-
         }
 
-        .logo-img{
+        #logo-img{
             position: absolute;
-            top: 8px;
+            top:5px;
             left: 253px;
         }
 
         /*공지사항 및 서치박스*/
-        .main-top{
+        #main-top{
             width: 70%;
             margin: 55px auto 20px;
             display: flex;
             justify-content: space-between;
         }
-        .main-title{
+        #main-title{
             font-family: "IBM Plex Sans KR", sans-serif;
-            font-size: 35px;
+            font-size: 40px;
             margin: 0;
-            color: #4e5968;
+            color: #333d48;
         }
-        .search-container{
+        #search-container{
             display: flex;
             align-items: center;
         }
-        .search-button{
+        #search-button{
             position: relative;
             width: 35px;
             height: 35px;
@@ -87,41 +83,43 @@
             cursor: pointer;
         }
 
-        .search-img{
+        #search-img{
             position: absolute;
             top: 6px;
             left: 6px;
         }
-        .search:hover,
-        .search:focus {
+        #search:hover,
+        #search:focus {
             outline: none;
         }
 
-        .search{
+        #search{
             border-radius: 5px;
             border:1px solid #979797;
         }
 
         /*리스트 글 테이블*/
         #list-container{
-            margin: 0 auto;
+            margin: 30px auto 0 auto;
             width: 70%;
         }
-        .list-table{
+        #list-table{
             border-bottom:1px solid #8D8D8D;
             width: 100%;
         }
-        .list-title{
+        #list-title{
             margin: 0;
             padding:10px 0 10px 0;
             color: #4e5968;
+
         }
-        .list-date{
+        #list-date{
             margin: 0;
             padding-bottom: 12px;
             color: #8b95a1;
         }
 
+        /*페이지 네이션*/
         #page-nation {
             display: flex;
             justify-content: center;
@@ -141,6 +139,18 @@
         #page-nation button.active {
             font-weight: bold;
             color: #00A3FF;
+        }
+
+        #no-text{
+            padding: 0;
+            margin: 0;
+        }
+
+        #no-data{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         /*회원이름 클릭시*/
@@ -174,7 +184,7 @@
             color: #b4b4b4;
         }
 
-        .logout-btn{
+        #logout-btn{
             margin: 0;
             padding: 0;
             display: flex;
@@ -183,11 +193,9 @@
             cursor: pointer;
 
         }
-        .logout-btn:hover #logout-text {
+
+        #logout-btn:hover #logout-text {
             color:black;
-        }
-        #userGreeting{
-            cursor: pointer;
         }
 
 
@@ -196,37 +204,38 @@
 
 </head>
 
-<header>
-    <div class="logo">
-        <a href="">
-            <h3 class="logo-title">SHARE BOARD</h3>
-            <img src="../img/logo.png" width="45" height="25" class="logo-img">
+<header id="header">
+    <div id="logo">
+        <a href="../afterLogin/after_login-list.html">
+            <h3 id="logo-title">SHARE BOARD</h3>
+            <img src="../img/logo.png" width="45" height="25" id="logo-img">
         </a>
     </div>
-    <div class="navigation-bar">
-        <ul class="navigation">
+    <div id="navigation-bar">
+        <ul id="navigation">
             <li id="notice" class="navigations">공지사항 </li>
-            <li id="list" class="navigations"><a href="after_login-list.html">글 목록</a> </li>
+            <li id="list" class="navigations"><a href="after_login-list.html">글 목록</a></li>
             <li id="writing" class="navigations"><a href="../write/write-admin.html">글 작성</a></li>
             <li id="userGreeting" onclick="showLogout()"> <a href="../createUser/login.html">
             </a></li>
         </ul>
         <div id="for-logout" style="display: none">
             <h4 id="logout-title"></h4>
-            <div class="logout-btn">
+            <div id="logout-btn">
                 <img src="../img/logout.png" width="38px" height="38px" id="logout-img">
                 <h5 id="logout-text" onclick="logout()">로그아웃</h5>
             </div>
         </div>
     </div>
+
 </header>
 <body>
-<div class="main-top">
-    <h4 class="main-title">공지사항</h4>
+<div id="main-top">
+    <h4 id="main-title">공지사항</h4>
     <div id="search-container">
-        <input type="text" class="search" style="width: 210px; height: 30px;" placeholder="검색어를 입력하세요.">
-        <button class="search-button" type="button">
-            <img src="../img/whiteGlass.png" width="22" height="22" class="search-img">
+        <input type="text" id="search" style="width: 210px; height: 30px;" placeholder="검색어를 입력하세요.">
+        <button id="search-button" type="button">
+            <img src="../img/whiteGlass.png" width="22" height="22" id="search-img">
         </button>
     </div>
 </div>
@@ -241,6 +250,11 @@
 <div id="page-nation">
 
 </div>
+
+
+
+
+
 
 
 
@@ -338,7 +352,6 @@
             const currentData = data.slice(startIndex, endIndex); // 현재 페이지의 데이터
 
             if(data.length === 0){ // 데이터가 없으면
-                document.getElementById('search-container').style.display = 'none';
                 document.getElementById('no-data').style.display = ''
             } else { // 데이터가 있으면
                 document.getElementById('search-container').style.display = '';
@@ -352,15 +365,15 @@
 
             currentData.forEach(item => {
                 const div = document.createElement("div");
-                div.className = "list-table";
+                div.id = "list-table";
 
                 const h3 = document.createElement("h3");
-                h3.className = "list-title";
+                h3.id = "list-title";
                 h3.textContent = item.title;
                 h3.onclick = () => handleCellClick(item); // 클릭할 때 item 객체를 넘깁니다
 
                 const h5 = document.createElement("h5");
-                h5.className = "list-date";
+                h5.id = "list-date";
                 h5.textContent = new Date(item.date).toLocaleDateString();
                 h5.onclick = () => handleCellClick(item); // 클릭할 때 item 객체를 넘깁니다
 

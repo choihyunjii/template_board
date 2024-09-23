@@ -10,58 +10,13 @@
         @import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Nanum+Gothic&display=swap'); /*얇은 폰트*/
 
 
-        body{
-        }
+
 
         /*헤더*/
-        header{
-            box-shadow: 0 4px 6px -4px rgb(182, 182, 182);
-            display: flex;
-            justify-content: space-between;
-            height: 60px;
 
-        }
-        .navigation-bar ul{
-            display: flex;
-            list-style: none;
-            margin-right: 80px;
-            gap: 40px;
-            padding: 0;
-        }
-        .navigation-bar li{
-            font-family: "IBM Plex Sans KR", sans-serif;
-            font-size: 20px;
-            display: inline;
-        }
-        a {
-            text-decoration: none;
-            color: #000000;
-        }
-        .logo{
-            display: flex;
-            align-items: center;
-        }
-
-        .logo-title{
-            font-family: "IBM Plex Sans KR", sans-serif;
-            margin: 0;
-            font-size: 35px;
-            color: #00A3FF;
-            position: relative;
-            padding-left: 25px;
-        }
-
-        .logo-img{
-            position: absolute;
-            top: 8px;
-            left: 253px;
-        }
 
         /*공지사항 및 서치박스*/
-        a {
-            text-decoration: none;
-            color: black;
-        }
+
         h1 {
             padding: 0;
             margin: 0;
@@ -70,7 +25,7 @@
             margin: 0;
             padding: 5px;
         }
-        .post-container {
+        #post-container {
             font-family: "IBM Plex Sans KR", sans-serif;
             background-color: #ffffff;
             padding: 20px;
@@ -80,14 +35,14 @@
             box-sizing: border-box;
             margin: 50px auto 0;
         }
-        .post-title {
+        #post-title {
             font-size: 25px;
             margin-bottom: 10px;
             color: #333;
             border-bottom: 2px solid #ececec;
             padding-bottom: 15px;
         }
-        .button-container {
+        #button-container {
             padding: 0;
             display: flex;
             gap: 13px;
@@ -105,46 +60,46 @@
             color: white;
             font-size: 13px;
         }
-        .post-meta {
+        #post-meta {
             font-size: 15px;
             color: #999;
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
         }
-        .post-image img {
+        #post-image img {
             display: flex;
             margin: 0 auto;
             border-radius: 8px;
         }
-        .post-content {
+        #post-content {
             font-size: 22px;
             line-height: 1.6;
             color: #555;
             margin-top: 10px;
         }
 
-        .back-link {
+        #back-link {
             display: inline-block;
             font-size: 14px;
             color: #00A3FF;
             text-decoration: none;
         }
-        .back-link:hover {
+        #back-link:hover {
             text-decoration: underline;
         }
-        .post-bottom {
+        #post-bottom {
             display: flex;
             margin-top: 30px;
         }
 
 
         /*글 쓰기*/
-        .write-container{
+        #write-container{
             margin: 80px auto 0;
             width: 65%;
         }
-        .write-titleAndWriter{
+        #write-titleAndWriter{
             width: 90%;
             margin: 20px auto 0 ;
             align-items: center;
@@ -157,13 +112,13 @@
             width: 100px;
 
         }
-        .write-title{
+        #write-title{
             display: flex;
             gap: 22px;
             align-items: center;
         }
 
-        .write-title input{
+        #write-title input{
             font-family: "IBM Plex Sans KR", sans-serif;
             width:100%;
             height: 38px;
@@ -174,7 +129,7 @@
 
 
         /*본문*/
-        .write-main{
+        #write-main{
             display: flex;
             margin: 15px auto 0 ;
             width: 90%;
@@ -194,7 +149,7 @@
 
 
         /*사진 첨부*/
-        .write-image{
+        #write-image{
             width: 90%;
             margin: 15px auto 0 ;
             display: flex;
@@ -210,7 +165,7 @@
             margin-right: 13px;
             background-color: white;
         }
-        .img-inform h6{
+        #img-inform h6{
             font-family: "IBM Plex Sans KR", sans-serif;
             padding: 0;
             margin:0;
@@ -237,7 +192,7 @@
 
 
         /*수정하기 클릭 후*/
-        .bottom{
+        #bottom{
             display: flex;
             margin-top: 10px;
         }
@@ -249,38 +204,17 @@
 
 </head>
 
-<header>
-    <div class="logo">
-        <a href="./main-notice.html">
-            <h3 class="logo-title">SHARE BOARD</h3>
-            <img src="../img/logo.png" width="45" height="25" class="logo-img">
-        </a>
-    </div>
-    <div class="navigation-bar">
-        <ul class="navigation">
-            <li id="notice" class="navigations">공지사항</li>
-            <li id="list" class="navigations"><a href="./main-list.html"> 글 목록</a></li>
-            <li id="login"> <a href="../createUser/login.html">로그인</a></li>
-        </ul>
-    </div>
-</header>
+
 <body>
-<!--<div class="main-top">-->
-<!--    <h4 class="main-title">공지사항</h4>-->
-<!--</div>-->
 
 <div id="main">
 
 </div>
 
-
 <SCRIPT>
     /*헤더*/
     window.onload = function (){ /*디폴트값*/
-        const notice = document.getElementById('notice');
-        notice.style.color='#00A3FF';
         fetchData();
-
     }
 
     /*게시글 내용*/
@@ -319,7 +253,7 @@
     const createView = (title, writer, mainText, date, id) => {
         const main = document.getElementById("main");
         const container = document.createElement("div");
-        container.className = "container";
+        container.id = "container";
 
         const author = sessionStorage.getItem('id');
         console.log(id);
@@ -327,22 +261,22 @@
         const isAuthor = author === id;
 
         container.innerHTML = `
-            <div class="post-container">
-                <h1 class="post-title">${title}</h1>
+            <div id="post-container">
+                <h1 id="post-title">${title}</h1>
 
-                <div class="post-meta">
-                    <span class="post-author">${writer}</span>
-                    <span class="post-date">${date}</span>
+                <div id="post-meta">
+                    <span id="post-author">${writer}</span>
+                    <span id="post-date">${date}</span>
                 </div>
 
-                <div class="post-content">
+                <div id="post-content">
                     <p>
                         ${mainText}
                     </p>
                 </div>
-                <div class="post-bottom">
-                     <a href="#" class="back-link" onclick="backScreen()">← 목록으로 돌아가기</a>
-                     <div class="button-container" ${isAuthor ? "" : 'style="display:none;"'}>
+                <div id="post-bottom">
+                     <a href="#" id="back-link" onclick="backScreen()">← 목록으로 돌아가기</a>
+                     <div id="button-container" ${isAuthor ? "" : 'style="display:none;"'}>
                         <button type="button" id="updateBtn">수정하기</button>
                         <button type="button" id="deleteBtn">삭제하기</button>
                     </div>
@@ -372,12 +306,12 @@
 
     // 글 삭제하기
     const deleteData = async () => {
-        const postID = sessionStorage.getItem("postID");
+        const postID = sessionStorage.getItem("notice-postID");
         const userConfirmed = confirm('글을 삭제하시겠습니까?');
 
         if (userConfirmed) {
             try {
-                const response = await fetch(`http://localhost:8080/api/json/ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a/${postID}`, {
+                const response = await fetch(`http://localhost:8080/api/json/29b79579ef844418808b93ddf7c26f50a2beb4710cc0ad567cb3a027ee8983ac/${postID}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -404,10 +338,10 @@
 
     //글 수정하기
     const updateData = async () => {
-        const postID = sessionStorage.getItem("postID");
+        const postID = sessionStorage.getItem("notice-postID");
 
         try {
-            const response = await fetch(`http://localhost:8080/api/json/ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a`, {
+            const response = await fetch(`http://localhost:8080/api/json/29b79579ef844418808b93ddf7c26f50a2beb4710cc0ad567cb3a027ee8983ac`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -438,23 +372,23 @@
 
         const main = document.getElementById("main");
         main.innerHTML = `
-               <div class="post-container">
-                <h1 class="post-title"><input value="${title}"  id="title"></h1>
+               <div id="post-container">
+                <h1 id="post-title"><input value="${title}"  id="title"></h1>
 
-                <div class="post-meta">
-                    <span class="post-author">${writer}</span>
-                    <span class="post-date">${date}</span>
+                <div id="post-meta">
+                    <span id="post-author">${writer}</span>
+                    <span id="post-date">${date}</span>
                 </div>
 
-                <div class="post-content">
+                <div id="post-content">
 
 
                    <textarea id="textArea">${mainText}</textarea>
 
                 </div>
-                <div class="bottom">
-                     <a href="#" class="back-link" onclick="backScreen()">← 이전으로</a>
-                     <div class="button-container">
+                <div id="bottom">
+                     <a href="#" id="back-link" onclick="backScreen()">← 이전으로</a>
+                     <div id="button-container">
                         <button type="button" id="saveButton">저장하기</button>
                         <button type="button" id="deleteBtn">삭제하기</button>
                     </div>
@@ -468,13 +402,15 @@
             saveData(data);
         });
 
-        document.getElementById('deleteButton').addEventListener('click',
-            deleteData
+        document.getElementById('deleteBtn').addEventListener('click',function (){
+                deleteData();
+        }
+
         );
     };
 
     const saveData = async (data) => {
-        const postID = sessionStorage.getItem("postID");
+        const postID = sessionStorage.getItem("notice-postID");
         const title = document.getElementById("title").value;
         const mainText = document.getElementById("textArea").value;
 
@@ -491,7 +427,7 @@
 
         try {
 
-            const response = await fetch(`http://localhost:8080/api/json/ab261bcffa88bf273bb7bd8b12b24bc672bbf8b601584db495aa706f8d2e8f4a/${postID}`, {
+            const response = await fetch(`http://localhost:8080/api/json/29b79579ef844418808b93ddf7c26f50a2beb4710cc0ad567cb3a027ee8983ac/${postID}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
